@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 module.exports = {
     name: "restart",
-    aliases: ["refresh"]
+    aliases: ["refresh"],
     description: "to restart bot for any changes",
     async execute(client, message, args) {
 
