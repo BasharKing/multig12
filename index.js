@@ -133,3 +133,5 @@ Money.findOne({
         }
     })
 });
+
+client.login(process.env.TOKEN);
