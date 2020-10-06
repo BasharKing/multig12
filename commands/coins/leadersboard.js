@@ -1,9 +1,10 @@
 const Discord = require("discord.js");
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/money", {
-    useNewUrlParser: true
+const mongoPath = "mongodb+srv://multig:L3j26ySPbqQgfjKd@cluster0.bhj3c.mongodb.net/multigdb?retryWrites=true&w=majority"
+mongoose.connect(mongoPath, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 });
-
 module.exports = {
     name: "leaderboard",
     aliases: ["ranks", "leaders", "leader"],
