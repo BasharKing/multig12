@@ -5,6 +5,7 @@ mongoose.connect(mongoPath, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
+
 module.exports = {
     name: "leaderboard",
     aliases: ["ranks", "leaders", "leader"],
@@ -33,9 +34,9 @@ module.exports = {
               for (i = 0; i < res.length; i++) {
                 let member = message.guild.members.cache.get(res[i].userID) || "User Left"
                 if (member === "User Left") {
-                  embed.addField("Top Coins:", `#${i + 1} | **${member}** Coins: **${res[i].money}**`);
+                  embed.addField(`#${i + 1} | ${member}`, `Coins: **${res[i].money}**`);
                 } else {
-                  embed.addField(`Top Coins:`, `#${i + 1} | **${member.user.username}** Coins: **${res[i].money}**`);
+                  embed.addField(`#${i + 1} | ${member.user.username}`, `Coins: **${res[i].money}**`);
                 }
               }
             } else {
@@ -44,9 +45,9 @@ module.exports = {
               for (i = 0; i < 10; i++) {
                 let member = message.guild.members.cache.get(res[i].userID) || "User Left"
                 if (member === "User Left") {
-                  embed.addField("Top Coins:", `#${i + 1} | **${member}** Coins: **${res[i].money}**`);
+                  embed.addField(`#${i + 1} | ${member}`, `Coins:**${res[i].money}**`);
                 } else {
-                  embed.addField(`Top Coins:`, `#${i + 1} | **${member.user.username}** Coins: **${res[i].money}**`);
+                  embed.addField(`#${i + 1} | ${member.user.username}`, `Coins: **${res[i].money}**`);
                 }
               }
             }
