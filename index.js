@@ -43,7 +43,7 @@ if(message.channel.type === "dm") return;
 
 const mentionRegex = RegExp(`^<@!${client.user.id}>$`);
 if(message.content.match(mentionRegex)) message.channel.send("Boop!").then(msg => {
-      msg.edit(`Beep boop!\n**My default prefix: \`${prefix}\` - support: \`https://discord.gg/h4F6h8k\`\nwebsite: \`https://arzonabot.xyz\`**`);
+      msg.edit(`Beep boop!\n**WTF! What do you want?**`);
 });
 
 if(message.content.indexOf(prefix) !== 0) return;
@@ -112,7 +112,7 @@ message.reply('there was an error trying to execute the command!');
 client.on("message", message => {
 
 if(message.author.bot) return;
-let coinstoadd = Math.ceil(Math.random() * 50);
+let coinstoadd = Math.ceil(Math.random() * 10);
 console.log(coinstoadd + "Coins");
 Money.findOne({
     userID: message.author.id,
