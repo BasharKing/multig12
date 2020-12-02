@@ -1,4 +1,4 @@
-const axios = require('axios')
+/* const axios = require('axios')
 const { MessageEmbed } = require('discord.js');
 module.exports = {
     name: "insta",
@@ -41,4 +41,4 @@ module.exports = {
         await message.channel.send(embed)
 
     }
-}
+}; */
