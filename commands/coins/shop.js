@@ -13,7 +13,7 @@ module.exports = {
     execute(client, message, args) {
 
         const embed = new Discord.MessageEmbed()
-        .setAuthor("Items Shop | MG Shop", message.guild.iconURL({ dynamic: true }))
+        .setAuthor("MultiGaming Shop", message.guild.iconURL({ dynamic: true }))
         .setColor("#36393f")
         .addField("Private Room:", "**Cost:** 100 Coins", true)
         .addField("Private Room w/Special Role:", "**Cost:** 350 Coins", true)
