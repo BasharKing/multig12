@@ -12,7 +12,20 @@ module.exports = {
     description: "List of item to be sold using coins",
     execute(client, message, args) {
 
-        if(!message.author.id);
+        const embed = new Discord.MessageEmbed()
+        .setAuthor("Items Shop | MG Shop")
+        .setColor("#36393f")
+        .addField("Private Room", "**Cost:** 100 Coins", true)
+        .addField("Private Room w/Special Role", "**Cost:** 350 Coins", true)
+        .addField("Special Role", "**Cost:** 250 Coins", true)
+        .addField("Create Gang", "**Cost:** 300 Coins", true)
+        .addField("Music Bot | Soon", "**Cost:** 200 Coins", true)
+        .addField("Note", "All items is for 1month/ You can renew it by talking to .bashaàrI ⚘#7069")
+        .setTimestamp()
+        .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }));
+
+        message.channel.send(embed);
+        
 
     },
 };
