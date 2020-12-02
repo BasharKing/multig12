@@ -1,49 +1,44 @@
-const Discord = require("discord.js");
-const { stripIndents } = require("common-tags");
-
-const fetch = require("node-fetch");
-
+const axios = require('axios')
+const { MessageEmbed } = require('discord.js');
 module.exports = {
-    name: "instagram",
-    aliases: ["insta"],
-    description: "Find out some nice instagram statistics",
-    usage: "<name>",
-    async execute(client, message, args) {
-        const name = args.join(" ");
-
-        if (!name) {
-            return message.channel.send(`**${message.author.username}** Please input a user to search about it. 🔍`);
+    name: "insta",
+    description: "to know details about instagram username",
+    async execute (client, message, args) {
+        if (!args[0]) {
+            return message.channel.send(`Please Enter a Channel Name`)
         }
-
-        const url = `https://instagram.com/${name}/?__a=1`;
-        
-        let res; 
-
+        let url, response, account, details;
         try {
-            res = await fetch(url).then(url => url.json());
-        } catch (e) {
-            return message.channel.send(`**${message.author.username}** I can't find that user.`);
+            url = `https://instagram.com/${args[0]}/?__a=1`;
+            response = await axios.get(url)
+            account = response.data
+            details = account.graphql.user
+        } catch (error) {
+            return message.channel.send(`Not A Account`)
         }
 
-        try {
+        const embed = new MessageEmbed()
+            .setTitle(`${details.is_verified ? `${details.username} <a:verified:727820439497211994>` : ` ${details.username}`} ${details.is_private ? '🔒' : ''} `)
+            .setDescription(details.biography)
+            .setThumbnail(details.profile_pic_url)
+            .addFields(
+                {
+                    name: "Total Posts:",
+                    value: details.edge_owner_to_timeline_media.count.toLocaleString(),
+                    inline: true
+                },
+                {
+                    name: "Followers:",
+                    value: details.edge_followed_by.count.toLocaleString(),
+                    inline: true
+                },
+                {
+                    name: "Following:",
+                    value: details.edge_follow.count.toLocaleString(),
+                    inline: true
+                }
+            )
+        await message.channel.send(embed)
 
-        const account = res.graphql.user;
-
-        const embed = new Discord.MessageEmbed()
-            .setColor("#36393f")
-            .setTitle(`${account.full_name}`)
-            .setURL(`https://instagram.com/${name}`)
-            .setThumbnail(account.profile_pic_url_hd)
-            .addField("Profile Info", stripIndents`**User:** ${account.username} 
-            **Fullname:** ${account.full_name}
-            **Posts:** ${account.edge_owner_to_timeline_media.count}
-            **Followers:** ${account.edge_followed_by.count}
-            **Following:** ${account.edge_follow.count}
-            **Bio:** ${account.biography.length == 0 ? "No bio." : account.biography}`);
-
-        message.channel.send(embed);
-        } catch(ex) {
-             message.channel.send(`I can't find that user.`);
-        }
-    },
-};
+    }
+}

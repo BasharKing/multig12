@@ -9,6 +9,7 @@
   "dependencies": {
     "ascii-table": "0.0.9",
     "avconv": "^3.1.0",
+    "axios": "^0.21.0",
     "common-tags": "^1.8.0",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
