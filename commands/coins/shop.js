@@ -12,7 +12,7 @@ module.exports = {
     description: "List of item to be sold using coins",
     execute(client, message, args) {
 
-        
+        if(!message.author.id);
 
     },
 };
