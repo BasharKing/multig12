@@ -25,7 +25,5 @@ module.exports = {
         .setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }));
 
         message.channel.send(embed);
-        
-
     },
 };

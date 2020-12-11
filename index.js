@@ -28,6 +28,56 @@ client.on("ready", () => {
     client.user.setActivity("MultiG Society", { type: "WATCHING" });
 });
 
+client.on('guildMemberRemove', async member => {
+	const fetchedLogs = await member.guild.fetchAuditLogs({
+		limit: 1,
+		type: 'MEMBER_KICK',
+	});
+	// Since we only have 1 audit log entry in this collection, we can simply grab the first one
+	const kickLog = fetchedLogs.entries.first();
+
+	// Let's perform a coherence check here and make sure we got *something*
+	if (!kickLog) return console.log(`${member.user.tag} left the guild, most likely of their own will.`);
+
+	// We now grab the user object of the person who kicked our member
+	// Let us also grab the target of this action to double check things
+	const { executor, target } = kickLog;
+
+	// And now we can update our output with a bit more information
+	// We will also run a check to make sure the log we got was for the same kicked member
+	if (target.id === member.id) {
+		console.log(`${member.user.tag} left the guild; kicked by ${executor.tag}?`);
+	} else {
+		console.log(`${member.user.tag} left the guild, audit log fetch was inconclusive.`);
+	}
+});
+
+client.on('guildBanAdd', async (guild, user) => {
+	const fetchedLogs = await guild.fetchAuditLogs({
+		limit: 1,
+		type: 'MEMBER_BAN_ADD',
+	});
+	// Since we only have 1 audit log entry in this collection, we can simply grab the first one
+	const banLog = fetchedLogs.entries.first();
+
+    // Let's perform a coherence check here and make sure we got *something*
+    const logChannel = client.channels.cache.get('785940682976133121');
+	if (!banLog) return logChannel.send(`${user.tag} was banned from ${guild.name} but no audit log could be found.`);
+
+	// We now grab the user object of the person who banned the user
+	// Let us also grab the target of this action to double check things
+	const { executor, target } = banLog;
+
+	// And now we can update our output with a bit more information
+	// We will also run a check to make sure the log we got was for the same kicked member
+	if (target.id === user.id) {
+		logChannel.send(`${user.tag} has been banned from the server.\bby: **${executor.tag}**`);
+	} else {
+		logChannel.send(`${user.tag} got hit with the swift hammer of justice in the guild ${guild.name}, audit log fetch was inconclusive.`);
+	}
+});
+
+
 client.commands = new Discord.Collection();
 client.categories = fs.readdirSync("./commands/");
 const cooldowns = new Discord.Collection();
